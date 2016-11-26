@@ -38,11 +38,33 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 0
+		return resultArray.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		return UITableViewCell()
+		let result = resultArray[indexPath.row]
+		
+		if let userResult = result as? UserData{
+			let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! UserTableViewCell
+			cell.userNameLabel.text = userResult.userName
+			return cell
+		}
+		
+		if let repoResult = result as? RepositoryData{
+			let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell") as! RepoTableViewCell
+			cell.titleLabel.text = repoResult.repoTitle
+			cell.descriptionLabel.text = repoResult.repoDescription
+			cell.languageLabel.text = repoResult.repoLanguage
+			cell.starsLabel.text = "\(repoResult.repoStars)"
+			cell.forksLabel.text = "\(repoResult.repoID)"
+			
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+			cell.updatedLabel.text = dateFormatter.string(from: repoResult.repoUpdate)
+			return cell
+		}
+		//this should never happen
+		fatalError("wrong object type")
 	}
 	
 	//function which is launched when user is searching sth
@@ -86,5 +108,5 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		print("result array is \(resultArray.count)")
 		self.tableView.reloadData()
 	}
-
+	
 }

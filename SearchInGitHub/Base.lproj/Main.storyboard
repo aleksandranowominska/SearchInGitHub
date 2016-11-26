@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="repositoryCell" rowHeight="80" id="oK9-Xz-i2U">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="repoCell" rowHeight="80" id="oK9-Xz-i2U" customClass="RepoTableViewCell" customModule="SearchInGitHub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oK9-Xz-i2U" id="Bxr-d8-hDK">
@@ -128,8 +128,16 @@
                                                 <constraint firstItem="RKM-GF-Yj2" firstAttribute="top" secondItem="Bxr-d8-hDK" secondAttribute="topMargin" id="zT5-9m-QBX"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="cca-nX-NxV" id="FJX-Wj-7li"/>
+                                            <outlet property="forksLabel" destination="DeJ-Oo-VbY" id="BlG-hD-My2"/>
+                                            <outlet property="languageLabel" destination="R3G-ea-WKH" id="s2d-Bp-NTE"/>
+                                            <outlet property="starsLabel" destination="u13-nE-8E8" id="Zac-tU-IOC"/>
+                                            <outlet property="titleLabel" destination="RKM-GF-Yj2" id="HOk-95-eM5"/>
+                                            <outlet property="updatedLabel" destination="oqM-i3-GZm" id="jQ2-ox-AOJ"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" rowHeight="60" id="JOV-ra-K09">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" rowHeight="60" id="JOV-ra-K09" customClass="UserTableViewCell" customModule="SearchInGitHub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="108" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JOV-ra-K09" id="F0G-OL-JG4">
@@ -158,6 +166,10 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="uYF-mr-ASU" secondAttribute="trailing" id="qjg-If-5XC"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="userAvatar" destination="bN9-hd-RmI" id="Ur9-XQ-ye0"/>
+                                            <outlet property="userNameLabel" destination="uYF-mr-ASU" id="84L-cU-VX5"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
