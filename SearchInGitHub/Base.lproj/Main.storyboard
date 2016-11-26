@@ -168,8 +168,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="8bC-Xf-vdC" id="Jza-pX-mbV"/>
-                                    <outlet property="delegate" destination="8bC-Xf-vdC" id="lVS-yJ-Plx"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="rnA-Gv-YLI"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="CS5-mE-5SU"/>
                                 </connections>
                             </tableView>
                         </subviews>

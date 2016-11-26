@@ -14,6 +14,7 @@
 		6BA526D61DE9C3A90004754A /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA526D51DE9C3A90004754A /* images.xcassets */; };
 		6BA526D81DE9D5730004754A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA526D71DE9D5730004754A /* SearchViewController.swift */; };
 		6BA526DA1DE9DA480004754A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA526D91DE9DA480004754A /* DataManager.swift */; };
+		6BA526DC1DE9E21E0004754A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA526DB1DE9E21E0004754A /* UserData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		6BA526D51DE9C3A90004754A /* images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = images.xcassets; sourceTree = "<group>"; };
 		6BA526D71DE9D5730004754A /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6BA526D91DE9DA480004754A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		6BA526DB1DE9E21E0004754A /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		AEA024D9A7754AC0AC457B9C /* Pods-SearchInGitHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchInGitHub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SearchInGitHub/Pods-SearchInGitHub.debug.xcconfig"; sourceTree = "<group>"; };
 		B04013F8776AD869AE3048DB /* Pods-SearchInGitHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchInGitHub.release.xcconfig"; path = "Pods/Target Support Files/Pods-SearchInGitHub/Pods-SearchInGitHub.release.xcconfig"; sourceTree = "<group>"; };
 		B80B7A50B0024303A73B6CDC /* Pods_SearchInGitHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchInGitHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 				6BA526D51DE9C3A90004754A /* images.xcassets */,
 				6BA526D71DE9D5730004754A /* SearchViewController.swift */,
 				6BA526D91DE9DA480004754A /* DataManager.swift */,
+				6BA526DB1DE9E21E0004754A /* UserData.swift */,
 			);
 			path = SearchInGitHub;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			files = (
 				6BA526D81DE9D5730004754A /* SearchViewController.swift in Sources */,
 				6BA526DA1DE9DA480004754A /* DataManager.swift in Sources */,
+				6BA526DC1DE9E21E0004754A /* UserData.swift in Sources */,
 				6BA526C41DE9B1B00004754A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

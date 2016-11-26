@@ -15,6 +15,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		DataManager.instance.getUsers(query: "tom", userNamesDownloaded: {users in
+			print("found \(users.count) users")
+		}, userError: {error in
+		print("error")
+		
+		})
 
         // Do any additional setup after loading the view.
     }
