@@ -18,9 +18,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		DataManager.instance.getUsers(query: "tom", userNamesDownloaded: {users in
 			print("found \(users.count) users")
 		}, userError: {error in
-		print("error")
+		print("user error")
 		
 		})
+		DataManager.instance.getRepos(query: "tom", userReposDownloaded: {repos in
+			print("found \(repos.count) repos")
+		}, repoError: {error in
+			print("repo error")
+			})
 
         // Do any additional setup after loading the view.
     }

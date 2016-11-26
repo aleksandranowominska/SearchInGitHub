@@ -16,7 +16,9 @@ class DataManager{
 	
 	let apiURL = "https://api.github.com/"
 	let searchUsersApi = "search/users?q="
+	let searchReposApi = "search/repositories?q="
 	weak var previousUserQueryRequest: DataRequest?
+	weak var previousRepoQueryRequest: DataRequest?
 	
 	private init(){
 	}
@@ -26,7 +28,7 @@ class DataManager{
 		let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) //replace space to %20 in URL
 		let userURL = apiURL + searchUsersApi + queryEncoded!
 		
-		if let requestToCancel = previousUserQueryRequest { //cancel previous request to server
+		if let requestToCancel = previousUserQueryRequest { //cancel previous user request to server
 			requestToCancel.cancel()
 		}
 		let request = Alamofire.request(userURL)
@@ -50,5 +52,36 @@ class DataManager{
 		})
 		
 	}
+	
+	//get repos from Api
+	func getRepos(query: String, userReposDownloaded: @escaping (_ repoInfo: [RepositoryData]) -> Void, repoError: @escaping (_ error: String) -> Void){
+		let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) //replace space to %20 in URL
+		let repoURL = apiURL + searchReposApi + queryEncoded!
+		
+		if let requestToCancel = previousRepoQueryRequest { //cancel previous repo request to server
+			requestToCancel.cancel()
+		}
+		let request = Alamofire.request(repoURL)
+		previousRepoQueryRequest = request
+		
+		request.responseJSON(completionHandler: {response in //request for repo data
+			debugPrint(response)
+			if let resultValue = response.result.value{
+				let json = JSON(resultValue)
+				let items = json["items"].arrayValue
+				var foundRepos: [RepositoryData] = []
+				for item in items{
+					foundRepos.append(RepositoryData(item))
+				}
+				userReposDownloaded(foundRepos)
+			}
+			else {
+				repoError(response.result.error.debugDescription)
+			}
+			
+		})
+		
+	}
+
 	
 }
