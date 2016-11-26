@@ -14,7 +14,7 @@ class RepositoryData{
 	let id: Int
 	let repoTitle: String
 	let repoDescription: String
-	let repoLanguage: String
+	var repoLanguage: String
 	let repoStars: Int
 	let repoForks: Int
 	let repoUpdate: Date
@@ -24,6 +24,9 @@ class RepositoryData{
 		repoTitle = json["full_name"].stringValue
 		repoDescription = json["description"].stringValue
 		repoLanguage = json["language"].stringValue
+		if repoLanguage == "" {
+			repoLanguage = "Unknown"
+		}
 		repoStars = json["stargazers_count"].intValue
 		repoForks = json["fork"].intValue
 		let dateString = json["updated_at"].stringValue

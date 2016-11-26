@@ -8,5 +8,6 @@ target 'SearchInGitHub' do
   # Pods for SearchInGitHub
 	pod 'Alamofire'
 	pod 'SwiftyJSON'
+	pod 'SDWebImage'
 
 end

@@ -72,6 +72,7 @@ class DataManager{
 				var foundRepos: [RepositoryData] = []
 				for item in items{
 					foundRepos.append(RepositoryData(item))
+					
 				}
 				userReposDownloaded(foundRepos)
 			}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
 
@@ -19,6 +20,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.tableView.rowHeight = UITableViewAutomaticDimension
+		self.tableView.estimatedRowHeight = 44.0
 		
 		self.resultSearchController = UISearchController(searchResultsController: nil)
 		self.resultSearchController.searchResultsUpdater = self
@@ -47,6 +51,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		if let userResult = result as? UserData{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! UserTableViewCell
 			cell.userNameLabel.text = userResult.userName
+			cell.userAvatar.sd_setImage(with: URL(string: userResult.avatarURL), placeholderImage: #imageLiteral(resourceName: "placeholder"))
+			cell.userAvatar.layer.cornerRadius = 10.0
+			cell.userAvatar.clipsToBounds = true
 			return cell
 		}
 		
@@ -118,7 +125,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			rightId = rightRepo.id
 		}
 		
-		return leftId > rightId
+		return leftId < rightId
 	}
 	
 	func refreshTableView(){
