@@ -11,12 +11,12 @@ import SwiftyJSON
 
 class UserData{
 	
-	let userID: Int
+	let id: Int
 	let userName: String
 	let avatarURL: String
 	
 	init(_ json: JSON){
-		userID = json["id"].intValue
+		id = json["id"].intValue
 		userName = json["login"].stringValue
 		avatarURL = json["avatar_url"].stringValue
 	}

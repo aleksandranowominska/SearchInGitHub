@@ -56,7 +56,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.descriptionLabel.text = repoResult.repoDescription
 			cell.languageLabel.text = repoResult.repoLanguage
 			cell.starsLabel.text = "\(repoResult.repoStars)"
-			cell.forksLabel.text = "\(repoResult.repoID)"
+			cell.forksLabel.text = "\(repoResult.repoForks)"
 			
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
@@ -103,10 +103,32 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 	}
 	
+	func resultSorter(left: AnyObject, right: AnyObject) -> Bool{
+		var leftId = 0
+		if let leftUser = left as? UserData {
+			leftId = leftUser.id
+		} else if let leftRepo = left as? RepositoryData {
+			leftId = leftRepo.id
+		}
+		
+		var rightId = 0
+		if let rightUser = right as? UserData {
+			rightId = rightUser.id
+		} else if let rightRepo = right as? RepositoryData {
+			rightId = rightRepo.id
+		}
+		
+		return leftId > rightId
+	}
+	
 	func refreshTableView(){
 		resultArray = userArray + repoArray
-		print("result array is \(resultArray.count)")
+		resultArray.sort(by: resultSorter)
+		print("result array has \(resultArray.count) elements")
 		self.tableView.reloadData()
+		for result in resultArray {
+		print("id result \((result as? UserData)?.id ?? -1 ) \((result as? RepositoryData)?.id ?? -1 )" )
+		}
 	}
 	
 }

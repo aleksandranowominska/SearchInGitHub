@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class RepositoryData{
 	
-	let repoID: Int
+	let id: Int
 	let repoTitle: String
 	let repoDescription: String
 	let repoLanguage: String
@@ -20,7 +20,7 @@ class RepositoryData{
 	let repoUpdate: Date
 	
 	init(_ json: JSON){
-		repoID = json["id"].intValue
+		id = json["id"].intValue
 		repoTitle = json["full_name"].stringValue
 		repoDescription = json["description"].stringValue
 		repoLanguage = json["language"].stringValue
