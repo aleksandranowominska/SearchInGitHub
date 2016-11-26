@@ -19,6 +19,9 @@ class RepositoryData{
 	let repoForks: Int
 	let repoUpdate: Date
 	
+	let avatarURL: String
+	let userName: String
+	
 	init(_ json: JSON){
 		id = json["id"].intValue
 		repoTitle = json["full_name"].stringValue
@@ -34,6 +37,11 @@ class RepositoryData{
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 		repoUpdate = dateFormatter.date(from: dateString)!
+		
+		avatarURL = json["owner"]["avatar_url"].stringValue
+		userName = json["owner"]["login"].stringValue
+		
+		
 	}
 	
 	

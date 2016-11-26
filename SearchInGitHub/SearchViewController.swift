@@ -59,11 +59,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		if let repoResult = result as? RepositoryData{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell") as! RepoTableViewCell
-			cell.titleLabel.text = repoResult.repoTitle
+			cell.titleLabel.text = "\(repoResult.userName)/\(repoResult.repoTitle)"
 			cell.descriptionLabel.text = repoResult.repoDescription
 			cell.languageLabel.text = repoResult.repoLanguage
 			cell.starsLabel.text = "\(repoResult.repoStars)"
 			cell.forksLabel.text = "\(repoResult.repoForks)"
+			cell.repoAvatar.sd_setImage(with: URL(string: repoResult.avatarURL), placeholderImage: #imageLiteral(resourceName: "placeholder"))
+			cell.repoAvatar.layer.cornerRadius = 10.0
 			
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
