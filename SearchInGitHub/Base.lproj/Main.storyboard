@@ -22,15 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ovI-B8-mpw">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="dKd-IS-EPn"/>
-                                </connections>
-                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T8T-vm-pMN">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="repositoryCell" rowHeight="80" id="oK9-Xz-i2U">
@@ -175,13 +168,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="T8T-vm-pMN" firstAttribute="top" secondItem="ovI-B8-mpw" secondAttribute="bottom" id="DsP-HX-syy"/>
-                            <constraint firstItem="ovI-B8-mpw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="F2s-zP-EJo"/>
+                            <constraint firstItem="T8T-vm-pMN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="2Kb-DH-IoF"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T8T-vm-pMN" secondAttribute="bottom" id="J2L-ha-RxG"/>
                             <constraint firstItem="T8T-vm-pMN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NkH-7B-hSr"/>
-                            <constraint firstAttribute="trailing" secondItem="ovI-B8-mpw" secondAttribute="trailing" id="g9c-RK-pqx"/>
                             <constraint firstAttribute="trailing" secondItem="T8T-vm-pMN" secondAttribute="trailing" id="ptD-Dq-cVm"/>
-                            <constraint firstItem="ovI-B8-mpw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qbT-F4-7dZ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -193,7 +183,6 @@
                 <searchDisplayController id="8qm-C5-GGW">
                     <connections>
                         <outlet property="delegate" destination="BYZ-38-t0r" id="ZH7-IU-Jwa"/>
-                        <outlet property="searchBar" destination="ovI-B8-mpw" id="PAv-Yz-Qtd"/>
                         <outlet property="searchContentsController" destination="BYZ-38-t0r" id="5gj-cF-H4o"/>
                         <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="215-0G-WM9"/>
                         <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="Ceu-qA-oxB"/>
