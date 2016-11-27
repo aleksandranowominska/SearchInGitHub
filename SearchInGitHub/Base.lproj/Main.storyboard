@@ -242,17 +242,23 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="CS5-mE-5SU"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RFx-kT-G5i">
+                                <rect key="frame" x="177.5" y="323" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="RFx-kT-G5i" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KM4-MJ-OMN"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T8T-vm-pMN" secondAttribute="bottom" id="MYE-Xo-fib"/>
                             <constraint firstItem="T8T-vm-pMN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NkH-7B-hSr"/>
                             <constraint firstItem="T8T-vm-pMN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="PBi-2o-SOs"/>
+                            <constraint firstItem="RFx-kT-G5i" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fTe-dZ-QpT"/>
                             <constraint firstAttribute="trailing" secondItem="T8T-vm-pMN" secondAttribute="trailing" id="ptD-Dq-cVm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search in GitHub" id="1Ba-7g-Yjf"/>
                     <connections>
+                        <outlet property="progressCircle" destination="RFx-kT-G5i" id="sJd-pz-NRD"/>
                         <outlet property="searchDisplayController" destination="8qm-C5-GGW" id="pLR-lE-fpZ"/>
                         <outlet property="tableView" destination="T8T-vm-pMN" id="hV2-KE-uaA"/>
                     </connections>

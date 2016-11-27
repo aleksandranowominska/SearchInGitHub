@@ -18,6 +18,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var repoArray: [AnyObject] = []
 	var resultArray: [AnyObject] = []
 	
+	@IBOutlet weak var progressCircle: UIActivityIndicatorView!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -29,7 +31,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		self.resultSearchController.dimsBackgroundDuringPresentation = false
 		self.resultSearchController.searchBar.sizeToFit()
 		self.tableView.tableHeaderView = self.resultSearchController.searchBar
-		self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,34 +84,33 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	//function which is launched when user is searching sth
 	func updateSearchResults(for searchController: UISearchController) {
 		let searchText = searchController.searchBar.text!
-		let progressCircle = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 		progressCircle.hidesWhenStopped = true
 		progressCircle.tag = 2
-		searchController.searchBar.addSubview(progressCircle)
+		
 		progressCircle.startAnimating()
 
 		//search users
 		DataManager.instance.getUsers(query: searchText, userNamesDownloaded: {users in
 			print("found \(users.count) users")
 			self.userArray = users
-			progressCircle.stopAnimating()
+			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		}, userError: {error in
 			print("user error")
 			self.userArray = []
-			progressCircle.stopAnimating()
+			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		})
 		//search repos
 		DataManager.instance.getRepos(query: searchText, userReposDownloaded: {repos in
 			print("found \(repos.count) repos")
 			self.repoArray = repos
-			progressCircle.stopAnimating()
+			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		}, repoError: {error in
 			print("repo error")
 			self.repoArray = []
-			progressCircle.stopAnimating()
+			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		})
 		
