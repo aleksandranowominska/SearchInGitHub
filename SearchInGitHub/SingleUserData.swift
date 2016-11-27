@@ -13,7 +13,6 @@ class SingleUserData{
 
 	let avatarURL: String
 	let location: String
-	//let stars: Int
 	let repos: Int
 	let following: Int
 	let followers: Int
@@ -22,7 +21,6 @@ class SingleUserData{
 		
 		avatarURL = json["avatar_url"].stringValue
 		location = json["location"].stringValue
-		//stars
 		repos = json["public_repos"].intValue
 		following = json["following"].intValue
 		followers = json["followers"].intValue

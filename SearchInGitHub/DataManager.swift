@@ -18,10 +18,31 @@ class DataManager{
 	let searchUsersApi = "search/users?q="
 	let searchReposApi = "search/repositories?q="
 	let searchSingleUser = "users/"
+	let starsForUser = "/starred"
+	
 	weak var previousUserQueryRequest: DataRequest?
 	weak var previousRepoQueryRequest: DataRequest?
 	
 	private init(){
+	}
+	
+	//get quantity stars for single user from Api
+	func getStarsQuantityForUser(userLogin: String, quantityDownloaded: @escaping (_ quantity: Int) -> Void, userError: @escaping (_ error: String) -> Void){
+		
+		let starsURL = apiURL + searchSingleUser + userLogin + starsForUser
+		
+		let request = Alamofire.request(starsURL)
+		request.responseJSON(completionHandler: {response in //request for single user data
+			debugPrint(response)
+			if let resultValue = response.result.value{
+				let json = JSON(resultValue)
+				quantityDownloaded(json.arrayValue.count)
+			}
+			else {
+				userError(response.result.error.debugDescription)
+			}
+
+		})
 	}
 	
 	//get single user from Api
@@ -36,6 +57,10 @@ class DataManager{
 				let json = JSON(resultValue)
 				userDownloaded(SingleUserData(json))
 			}
+			else {
+				userError(response.result.error.debugDescription)
+			}
+
 		})
 	}
 	

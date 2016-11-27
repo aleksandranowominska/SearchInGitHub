@@ -70,7 +70,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		if let repoResult = result as? RepositoryData{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell") as! RepoTableViewCell
-			//cell.titleLabel.text = "\(repoResult.userName)/\(repoResult.repoTitle)"
 			cell.titleLabel.text = repoResult.repoTitle
 			cell.descriptionLabel.text = repoResult.repoDescription
 			cell.languageLabel.text = repoResult.repoLanguage
@@ -78,6 +77,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.forksLabel.text = "\(repoResult.repoForks)"
 			cell.repoAvatar.sd_setImage(with: URL(string: repoResult.avatarURL), placeholderImage: #imageLiteral(resourceName: "placeholder"))
 			cell.repoAvatar.layer.cornerRadius = 10.0
+			cell.repoAvatar.clipsToBounds = true
 			cell.starIcon.tintColor = UIColor.starYellow
 			cell.languageIcon.tintColor = UIColor.languageTurquoise
 			cell.forkIcon.tintColor = UIColor.forkMidnightBlue
@@ -177,6 +177,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		self.tableView.reloadData()
 		for result in resultArray {
 		//print("id result \((result as? UserData)?.id ?? -1 ) \((result as? RepositoryData)?.id ?? -1 )" )
+		}
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "goToUserDetails"{
+			let destination = segue.destination as! UserDetailsViewController
+			let selectedUser = resultArray[tableView.indexPathForSelectedRow!.row] as! UserData
+			destination.userLogin =  selectedUser.userName
+		}
+		else if segue.identifier == "goToRepoDetails"{
 		}
 	}
 	
