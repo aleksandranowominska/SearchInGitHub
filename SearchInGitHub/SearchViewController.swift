@@ -41,8 +41,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		self.resultSearchController.dimsBackgroundDuringPresentation = false
 		self.resultSearchController.searchBar.sizeToFit()
 		self.tableView.tableHeaderView = self.resultSearchController.searchBar
-    }
-
+	}
+	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -181,6 +181,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		resultSearchController.isActive = false
 		if segue.identifier == "goToUserDetails"{
 			let destination = segue.destination as! UserDetailsViewController
 			let selectedUser = resultArray[tableView.indexPathForSelectedRow!.row] as! UserData
