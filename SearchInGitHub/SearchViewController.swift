@@ -66,6 +66,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.forksLabel.text = "\(repoResult.repoForks)"
 			cell.repoAvatar.sd_setImage(with: URL(string: repoResult.avatarURL), placeholderImage: #imageLiteral(resourceName: "placeholder"))
 			cell.repoAvatar.layer.cornerRadius = 10.0
+			cell.starIcon.tintColor = UIColor.starYellow
+			cell.languageIcon.tintColor = UIColor.languageTurquoise
+			cell.forkIcon.tintColor = UIColor.forkMidnightBlue
+			
 			
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
@@ -133,10 +137,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	func refreshTableView(){
 		resultArray = userArray + repoArray
 		resultArray.sort(by: resultSorter)
-		print("result array has \(resultArray.count) elements")
+		//print("result array has \(resultArray.count) elements")
 		self.tableView.reloadData()
 		for result in resultArray {
-		print("id result \((result as? UserData)?.id ?? -1 ) \((result as? RepositoryData)?.id ?? -1 )" )
+		//print("id result \((result as? UserData)?.id ?? -1 ) \((result as? RepositoryData)?.id ?? -1 )" )
 		}
 	}
 	
