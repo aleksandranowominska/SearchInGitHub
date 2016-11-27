@@ -70,7 +70,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		if let repoResult = result as? RepositoryData{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell") as! RepoTableViewCell
-			cell.titleLabel.text = "\(repoResult.userName)/\(repoResult.repoTitle)"
+			//cell.titleLabel.text = "\(repoResult.userName)/\(repoResult.repoTitle)"
+			cell.titleLabel.text = repoResult.repoTitle
 			cell.descriptionLabel.text = repoResult.repoDescription
 			cell.languageLabel.text = repoResult.repoLanguage
 			cell.starsLabel.text = "\(repoResult.repoStars)"

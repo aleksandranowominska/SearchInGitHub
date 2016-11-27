@@ -17,10 +17,26 @@ class DataManager{
 	let apiURL = "https://api.github.com/"
 	let searchUsersApi = "search/users?q="
 	let searchReposApi = "search/repositories?q="
+	let searchSingleUser = "users/"
 	weak var previousUserQueryRequest: DataRequest?
 	weak var previousRepoQueryRequest: DataRequest?
 	
 	private init(){
+	}
+	
+	//get single user from Api
+	func getSingleUser(userLogin: String, userDownloaded: @escaping (_ userInfo: SingleUserData) -> Void, userError: @escaping (_ error: String) -> Void){
+		
+		let singleUserURL = apiURL + searchSingleUser + userLogin
+		
+		let request = Alamofire.request(singleUserURL)
+		request.responseJSON(completionHandler: {response in //request for single user data
+			debugPrint(response)
+			if let resultValue = response.result.value{
+				let json = JSON(resultValue)
+				userDownloaded(SingleUserData(json))
+			}
+		})
 	}
 	
 	//get users from Api
