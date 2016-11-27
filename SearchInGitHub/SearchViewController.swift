@@ -12,6 +12,11 @@ import SDWebImage
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
 
 	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var octoView: UIView!
+	
+	@IBOutlet weak var octoInfoLabel: UILabel!
+	@IBOutlet weak var octoImage: UIImageView!
+	
 	@IBOutlet weak var searchInGitHub: UISearchBar!
 	var resultSearchController = UISearchController()
 	var userArray: [AnyObject] = []
@@ -22,10 +27,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		//displaying octoView
+		self.octoView.isHidden = false
+		self.octoView.isUserInteractionEnabled = false
 		
+		//rows settings
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.estimatedRowHeight = 44.0
 		
+		//creating search Bar
 		self.resultSearchController = UISearchController(searchResultsController: nil)
 		self.resultSearchController.searchResultsUpdater = self
 		self.resultSearchController.dimsBackgroundDuringPresentation = false
@@ -71,7 +81,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.languageIcon.tintColor = UIColor.languageTurquoise
 			cell.forkIcon.tintColor = UIColor.forkMidnightBlue
 			
-			
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
 			cell.updatedLabel.text = dateFormatter.string(from: repoResult.repoUpdate)
@@ -86,7 +95,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let searchText = searchController.searchBar.text!
 		progressCircle.hidesWhenStopped = true
 		progressCircle.tag = 2
-		
 		progressCircle.startAnimating()
 
 		//search users
@@ -136,6 +144,33 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func refreshTableView(){
 		resultArray = userArray + repoArray
+		if (resultSearchController.searchBar.text?.characters.count)! <= 3 {
+			if resultSearchController.isActive == false {
+				self.octoInfoLabel.text = "Search to display"
+				self.octoImage.image = #imageLiteral(resourceName: "Octocat")
+				self.octoView.isHidden = false
+			}
+			else {
+			self.octoView.isHidden = true
+			}
+		}
+		else if resultSearchController.searchBar.text! != "" {
+			if resultArray.count == 0{
+				self.octoInfoLabel.text = "Sorry, nothing here. \n" + "Try again"
+				self.octoImage.image = #imageLiteral(resourceName: "OctocatSad_")
+				self.octoView.isHidden = false
+			}
+			else if resultArray.count != 0 {
+				self.octoView.isHidden = true
+			}
+		}
+		else if resultSearchController.isActive == false {
+			self.octoInfoLabel.text = "Search to display"
+			self.octoImage.image = #imageLiteral(resourceName: "Octocat")
+			self.octoView.isHidden = false
+		}
+
+
 		resultArray.sort(by: resultSorter)
 		//print("result array has \(resultArray.count) elements")
 		self.tableView.reloadData()

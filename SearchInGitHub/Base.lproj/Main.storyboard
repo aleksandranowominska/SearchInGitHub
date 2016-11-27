@@ -242,22 +242,64 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="CS5-mE-5SU"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdM-ua-NnE" userLabel="octocatView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search to display" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9S-9x-SQt" userLabel="info">
+                                        <rect key="frame" x="0.0" y="437" width="375" height="21"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Octocat" translatesAutoresizingMaskIntoConstraints="NO" id="9hf-6b-eq0" userLabel="octocatImg">
+                                        <rect key="frame" x="87" y="251" width="200" height="166"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="166" id="PO5-CL-s4O"/>
+                                            <constraint firstAttribute="width" constant="200" id="gdq-og-qNX"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstItem="9hf-6b-eq0" firstAttribute="centerX" secondItem="vdM-ua-NnE" secondAttribute="centerX" id="5fB-ah-OVy"/>
+                                    <constraint firstItem="h9S-9x-SQt" firstAttribute="leading" secondItem="vdM-ua-NnE" secondAttribute="leading" id="ZC5-gO-wSj"/>
+                                    <constraint firstItem="h9S-9x-SQt" firstAttribute="top" secondItem="9hf-6b-eq0" secondAttribute="bottom" constant="20" id="bHq-zq-JmU"/>
+                                    <constraint firstItem="9hf-6b-eq0" firstAttribute="centerY" secondItem="vdM-ua-NnE" secondAttribute="centerY" id="jOs-Cg-Xrl"/>
+                                    <constraint firstAttribute="trailing" secondItem="h9S-9x-SQt" secondAttribute="trailing" id="uSa-yJ-V47"/>
+                                </constraints>
+                            </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RFx-kT-G5i">
-                                <rect key="frame" x="177.5" y="323" width="20" height="20"/>
+                                <rect key="frame" x="178" y="323" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vdM-ua-NnE" secondAttribute="bottom" id="D7o-4m-wyS"/>
+                            <constraint firstAttribute="trailing" secondItem="vdM-ua-NnE" secondAttribute="trailing" id="JBh-0C-pyV"/>
                             <constraint firstItem="RFx-kT-G5i" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KM4-MJ-OMN"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T8T-vm-pMN" secondAttribute="bottom" id="MYE-Xo-fib"/>
                             <constraint firstItem="T8T-vm-pMN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NkH-7B-hSr"/>
                             <constraint firstItem="T8T-vm-pMN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="PBi-2o-SOs"/>
+                            <constraint firstItem="vdM-ua-NnE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="QNt-aN-35C"/>
                             <constraint firstItem="RFx-kT-G5i" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fTe-dZ-QpT"/>
                             <constraint firstAttribute="trailing" secondItem="T8T-vm-pMN" secondAttribute="trailing" id="ptD-Dq-cVm"/>
+                            <constraint firstItem="vdM-ua-NnE" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="z2o-qJ-VQZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search in GitHub" id="1Ba-7g-Yjf"/>
                     <connections>
+                        <outlet property="octoImage" destination="9hf-6b-eq0" id="JPZ-Eq-mR5"/>
+                        <outlet property="octoInfoLabel" destination="h9S-9x-SQt" id="Ju0-a3-CIn"/>
+                        <outlet property="octoView" destination="vdM-ua-NnE" id="Cvz-HW-6Pj"/>
                         <outlet property="progressCircle" destination="RFx-kT-G5i" id="sJd-pz-NRD"/>
                         <outlet property="searchDisplayController" destination="8qm-C5-GGW" id="pLR-lE-fpZ"/>
                         <outlet property="tableView" destination="T8T-vm-pMN" id="hV2-KE-uaA"/>
@@ -277,6 +319,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Octocat" width="400" height="332"/>
         <image name="circle" width="12" height="12"/>
         <image name="fork" width="12" height="12"/>
         <image name="star" width="12" height="12"/>
