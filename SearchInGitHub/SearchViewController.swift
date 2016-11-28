@@ -17,7 +17,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	@IBOutlet weak var octoInfoLabel: UILabel!
 	@IBOutlet weak var octoImage: UIImageView!
 	
-	@IBOutlet weak var searchInGitHub: UISearchBar!
 	var resultSearchController = UISearchController()
 	var userArray: [AnyObject] = []
 	var repoArray: [AnyObject] = []
@@ -95,10 +94,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	//function which is launched when user is searching sth
 	func updateSearchResults(for searchController: UISearchController) {
-		if searchController.isActive == false { // to remember last typed query
+		let searchText = searchController.searchBar.text!
+		if searchController.isActive == false || searchText == "" { // to remember last typed query
 			return
 		}
-		let searchText = searchController.searchBar.text!
+		
 		print("updateSearchResults wpisany tekst to\(searchText)")
 		progressCircle.hidesWhenStopped = true
 		progressCircle.tag = 2
@@ -111,6 +111,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		}, userError: {error in
+			self.octoInfoLabel.text = "Error! \n" + error
 			print("user error")
 			self.userArray = []
 			self.progressCircle.stopAnimating()
@@ -123,6 +124,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		}, repoError: {error in
+			self.octoInfoLabel.text = "Error! \n" + error
 			print("repo error")
 			self.repoArray = []
 			self.progressCircle.stopAnimating()
@@ -159,7 +161,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 				self.octoView.isHidden = false
 			}
 			else {
-			self.octoView.isHidden = true
+				self.octoView.isHidden = true
 			}
 		}
 		else if resultSearchController.searchBar.text! != "" {
@@ -178,7 +180,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			self.octoView.isHidden = false
 		}
 
-
+		//octoview is hidden when there are results to display
+		octoView.isHidden = resultArray.count > 0
+		
+		
 		resultArray.sort(by: resultSorter)
 		//print("result array has \(resultArray.count) elements")
 		self.tableView.reloadData()

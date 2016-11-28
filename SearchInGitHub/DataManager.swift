@@ -14,7 +14,8 @@ class DataManager{
 	
 	static let instance = DataManager()
 
-	let token =  "67f4878b5549fcf49f56762addd8ad4c7d1847d1" // that's private token used only to this project to have better access to GitHub API
+	let headers = ["Authorization": "token 67f4878b5549fcf49f56762addd8ad4c7d1847d1"] // that's private token (user: ciurkam) used only to this project to have better access to GitHub API
+	
 	let apiURL = "https://api.github.com/"
 	let searchUsersApi = "search/users?q="
 	let searchReposApi = "search/repositories?q="
@@ -32,12 +33,17 @@ class DataManager{
 		
 		let starsURL = apiURL + searchSingleUser + userLogin + starsForUser
 		
-		let request = Alamofire.request(starsURL)
+		let request = Alamofire.request(starsURL, headers: headers)
 		request.responseJSON(completionHandler: {response in //request for single user data
 			debugPrint(response)
 			if let resultValue = response.result.value{
 				let json = JSON(resultValue)
-				quantityDownloaded(json.arrayValue.count)
+				if let errorMessage = json["message"].string{
+					userError(errorMessage)
+				}
+				else{
+					quantityDownloaded(json.arrayValue.count)
+				}
 			}
 			else {
 				userError(response.result.error.debugDescription)
@@ -51,12 +57,17 @@ class DataManager{
 		
 		let singleUserURL = apiURL + searchSingleUser + userLogin
 		
-		let request = Alamofire.request(singleUserURL)
+		let request = Alamofire.request(singleUserURL, headers: headers)
 		request.responseJSON(completionHandler: {response in //request for single user data
 			debugPrint(response)
 			if let resultValue = response.result.value{
 				let json = JSON(resultValue)
-				userDownloaded(SingleUserData(json))
+				if let errorMessage = json["message"].string{
+					userError(errorMessage)
+				}
+				else{
+					userDownloaded(SingleUserData(json))
+				}
 			}
 			else {
 				userError(response.result.error.debugDescription)
@@ -73,19 +84,25 @@ class DataManager{
 		if let requestToCancel = previousUserQueryRequest { //cancel previous user request to server
 			requestToCancel.cancel()
 		}
-		let request = Alamofire.request(userURL)
+		let request = Alamofire.request(userURL, headers: headers)
 		previousUserQueryRequest = request
 		
 		request.responseJSON(completionHandler: {response in //request for user data
 			debugPrint(response)
 			if let resultValue = response.result.value{
 				let json = JSON(resultValue)
-				let items = json["items"].arrayValue
-				var foundUsers: [UserData] = []
-				for item in items{
-					foundUsers.append(UserData(item))
+				if let errorMessage = json["message"].string{
+					userError(errorMessage)
 				}
-				userNamesDownloaded(foundUsers)
+				else{
+					let items = json["items"].arrayValue
+					var foundUsers: [UserData] = []
+					for item in items{
+						foundUsers.append(UserData(item))
+					}
+					userNamesDownloaded(foundUsers)
+				}
+				
 			}
 			else {
 				userError(response.result.error.debugDescription)
@@ -103,7 +120,7 @@ class DataManager{
 		if let requestToCancel = previousRepoQueryRequest { //cancel previous repo request to server
 			requestToCancel.cancel()
 		}
-		let request = Alamofire.request(repoURL)
+		let request = Alamofire.request(repoURL, headers: headers)
 		previousRepoQueryRequest = request
 		
 		request.responseJSON(completionHandler: {response in //request for repo data
