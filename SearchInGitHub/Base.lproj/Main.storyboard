@@ -459,21 +459,13 @@
                                     <constraint firstItem="pcg-Nu-cCR" firstAttribute="centerX" secondItem="bwT-Nm-nmg" secondAttribute="centerX" id="pd9-Uk-stb"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qoa-qy-ZUb">
-                                <rect key="frame" x="0.0" y="264" width="375" height="403"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bwT-Nm-nmg" firstAttribute="top" secondItem="cEg-MC-ETB" secondAttribute="bottom" id="0wM-0b-0m5"/>
                             <constraint firstAttribute="trailing" secondItem="cEg-MC-ETB" secondAttribute="trailing" id="3SZ-IZ-pOW"/>
-                            <constraint firstAttribute="trailing" secondItem="Qoa-qy-ZUb" secondAttribute="trailing" id="AhY-bV-Ey6"/>
                             <constraint firstItem="bwT-Nm-nmg" firstAttribute="leading" secondItem="7Bp-Jh-0nm" secondAttribute="leading" id="ApA-IR-aYz"/>
-                            <constraint firstItem="exm-jq-EfT" firstAttribute="top" secondItem="Qoa-qy-ZUb" secondAttribute="bottom" id="E44-K7-GwG"/>
                             <constraint firstAttribute="trailing" secondItem="bwT-Nm-nmg" secondAttribute="trailing" id="MAF-UD-LIO"/>
-                            <constraint firstItem="Qoa-qy-ZUb" firstAttribute="leading" secondItem="7Bp-Jh-0nm" secondAttribute="leading" id="P4x-s5-c4K"/>
-                            <constraint firstItem="Qoa-qy-ZUb" firstAttribute="top" secondItem="bwT-Nm-nmg" secondAttribute="bottom" id="RhA-5w-48c"/>
                             <constraint firstItem="cEg-MC-ETB" firstAttribute="leading" secondItem="7Bp-Jh-0nm" secondAttribute="leading" id="ZLj-ie-piN"/>
                             <constraint firstItem="cEg-MC-ETB" firstAttribute="top" secondItem="6fJ-q5-DHy" secondAttribute="bottom" id="cSZ-qY-Ncf"/>
                         </constraints>

@@ -13,7 +13,8 @@ import SwiftyJSON
 class DataManager{
 	
 	static let instance = DataManager()
-	
+
+	let token =  "67f4878b5549fcf49f56762addd8ad4c7d1847d1" // that's private token used only to this project to have better access to GitHub API
 	let apiURL = "https://api.github.com/"
 	let searchUsersApi = "search/users?q="
 	let searchReposApi = "search/repositories?q="

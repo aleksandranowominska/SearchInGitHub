@@ -25,6 +25,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	@IBOutlet weak var progressCircle: UIActivityIndicatorView!
 	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		//displaying octoView
@@ -41,6 +42,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		self.resultSearchController.dimsBackgroundDuringPresentation = false
 		self.resultSearchController.searchBar.sizeToFit()
 		self.tableView.tableHeaderView = self.resultSearchController.searchBar
+		
 	}
 	
     override func didReceiveMemoryWarning() {
@@ -93,7 +95,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	//function which is launched when user is searching sth
 	func updateSearchResults(for searchController: UISearchController) {
+		if searchController.isActive == false { // to remember last typed query
+			return
+		}
 		let searchText = searchController.searchBar.text!
+		print("updateSearchResults wpisany tekst to\(searchText)")
 		progressCircle.hidesWhenStopped = true
 		progressCircle.tag = 2
 		progressCircle.startAnimating()
@@ -145,6 +151,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func refreshTableView(){
 		resultArray = userArray + repoArray
+		print("updateSearchResults refreshTV \(resultArray.count)")
 		if (resultSearchController.searchBar.text?.characters.count)! <= 3 {
 			if resultSearchController.isActive == false {
 				self.octoInfoLabel.text = "Search to display"
@@ -175,13 +182,20 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		resultArray.sort(by: resultSorter)
 		//print("result array has \(resultArray.count) elements")
 		self.tableView.reloadData()
-		for result in resultArray {
+		//for result in resultArray {
 		//print("id result \((result as? UserData)?.id ?? -1 ) \((result as? RepositoryData)?.id ?? -1 )" )
-		}
+		//}
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		//serchBarController hide and preserve text
+		let searchText = resultSearchController.searchBar.text
+		resultSearchController.searchResultsUpdater = nil
 		resultSearchController.isActive = false
+		resultSearchController.searchBar.text = searchText
+		resultSearchController.searchResultsUpdater = self
+
+		
 		if segue.identifier == "goToUserDetails"{
 			let destination = segue.destination as! UserDetailsViewController
 			let selectedUser = resultArray[tableView.indexPathForSelectedRow!.row] as! UserData
