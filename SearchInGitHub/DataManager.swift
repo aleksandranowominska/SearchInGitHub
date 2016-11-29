@@ -28,6 +28,12 @@ class DataManager{
 	private init(){
 	}
 	
+	
+	func cancelAllRequests(){
+		previousRepoQueryRequest?.cancel()
+		previousUserQueryRequest?.cancel()
+	}
+
 	//get quantity stars for single user from Api
 	func getStarsQuantityForUser(userLogin: String, quantityDownloaded: @escaping (_ quantity: Int) -> Void, userError: @escaping (_ error: String) -> Void){
 		
@@ -81,9 +87,8 @@ class DataManager{
 		let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) //replace space to %20 in URL
 		let userURL = apiURL + searchUsersApi + queryEncoded!
 		
-		if let requestToCancel = previousUserQueryRequest { //cancel previous user request to server
-			requestToCancel.cancel()
-		}
+		previousUserQueryRequest?.cancel()
+	
 		let request = Alamofire.request(userURL, headers: headers)
 		previousUserQueryRequest = request
 		
@@ -105,6 +110,9 @@ class DataManager{
 				
 			}
 			else {
+				if let cancelError = response.result.error as? NSError {
+					if cancelError.code == -999 {return} // ignore canceled requests
+				}
 				userError(response.result.error.debugDescription)
 			}
 			
@@ -117,9 +125,8 @@ class DataManager{
 		let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) //replace space to %20 in URL
 		let repoURL = apiURL + searchReposApi + queryEncoded!
 		
-		if let requestToCancel = previousRepoQueryRequest { //cancel previous repo request to server
-			requestToCancel.cancel()
-		}
+		previousRepoQueryRequest?.cancel()
+		
 		let request = Alamofire.request(repoURL, headers: headers)
 		previousRepoQueryRequest = request
 		
@@ -136,6 +143,9 @@ class DataManager{
 				userReposDownloaded(foundRepos)
 			}
 			else {
+				if let cancelError = response.result.error as? NSError {
+					if cancelError.code == -999 {return} // ignore canceled requests
+				}
 				repoError(response.result.error.debugDescription)
 			}
 			

@@ -10,6 +10,18 @@ import UIKit
 import SDWebImage
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+	enum SearchStatus{
+		case beforeSearch
+		case searching
+		case results
+		case error (String)
+	}
+	
+	var searchStatus: SearchStatus = .beforeSearch {
+		didSet{
+			updateViewsFor(status: searchStatus)
+		}
+	}
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var octoView: UIView!
@@ -18,15 +30,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	@IBOutlet weak var octoImage: UIImageView!
 	
 	var resultSearchController = UISearchController()
-	var userArray: [AnyObject] = []
-	var repoArray: [AnyObject] = []
+	var userArray: [AnyObject]?
+	var repoArray: [AnyObject]?
 	var resultArray: [AnyObject] = []
 	
 	@IBOutlet weak var progressCircle: UIActivityIndicatorView!
 	
-	
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.progressCircle.hidesWhenStopped = true
+		
+		searchStatus = .beforeSearch
 		//displaying octoView
 		self.octoView.isHidden = false
 		self.octoView.isUserInteractionEnabled = false
@@ -44,11 +58,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 	}
 	
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-	
+	// MARK: TableView functions
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
@@ -92,43 +102,63 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		fatalError("wrong object type")
 	}
 	
+	// MARK: Other functions
+	
+	func updateViewsFor(status: SearchStatus){
+		switch status {
+		case .beforeSearch:
+			DataManager.instance.cancelAllRequests()
+			resultArray.removeAll()
+			tableView.reloadData()
+			octoInfoLabel.text = "Search to display"
+			octoImage.image = #imageLiteral(resourceName: "Octocat")
+			octoView.isHidden = false
+			progressCircle.stopAnimating()
+		case .searching:
+			octoView.isHidden = true
+			progressCircle.startAnimating()
+		case .results:
+			if resultArray.count == 0{
+				octoInfoLabel.text = "Sorry, nothing here. \n" + "Try again"
+				octoImage.image = #imageLiteral(resourceName: "OctocatSad_")
+				octoView.isHidden = false
+			}
+			else if resultArray.count != 0 {
+				octoView.isHidden = true
+			}
+			progressCircle.stopAnimating()
+		case let .error(errorMessage):
+			octoImage.image = #imageLiteral(resourceName: "OctocatSad_")
+			octoInfoLabel.text = "Error! \n" + errorMessage
+			octoView.isHidden = false
+			progressCircle.stopAnimating()
+		}
+	}
+	
 	//function which is launched when user is searching sth
 	func updateSearchResults(for searchController: UISearchController) {
 		let searchText = searchController.searchBar.text!
-		if searchController.isActive == false || searchText == "" { // to remember last typed query
+		if searchText == "" {
+			searchStatus = .beforeSearch
 			return
 		}
+		searchStatus = .searching
+		userArray = nil
+		repoArray = nil
 		
-		print("updateSearchResults wpisany tekst to\(searchText)")
-		progressCircle.hidesWhenStopped = true
-		progressCircle.tag = 2
-		progressCircle.startAnimating()
-
 		//search users
 		DataManager.instance.getUsers(query: searchText, userNamesDownloaded: {users in
-			print("found \(users.count) users")
 			self.userArray = users
-			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		}, userError: {error in
-			self.octoInfoLabel.text = "Error! \n" + error
-			print("user error")
-			self.userArray = []
-			self.progressCircle.stopAnimating()
-			self.refreshTableView()
+			self.searchStatus = .error(error)
 		})
 		//search repos
 		DataManager.instance.getRepos(query: searchText, userReposDownloaded: {repos in
-			print("found \(repos.count) repos")
 			self.repoArray = repos
-			self.progressCircle.stopAnimating()
 			self.refreshTableView()
 		}, repoError: {error in
-			self.octoInfoLabel.text = "Error! \n" + error
-			print("repo error")
-			self.repoArray = []
-			self.progressCircle.stopAnimating()
-			self.refreshTableView()
+			self.searchStatus = .error(error)
 		})
 		
 	}
@@ -152,44 +182,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	func refreshTableView(){
-		resultArray = userArray + repoArray
-		print("updateSearchResults refreshTV \(resultArray.count)")
-		if (resultSearchController.searchBar.text?.characters.count)! <= 3 {
-			if resultSearchController.isActive == false {
-				self.octoInfoLabel.text = "Search to display"
-				self.octoImage.image = #imageLiteral(resourceName: "Octocat")
-				self.octoView.isHidden = false
-			}
-			else {
-				self.octoView.isHidden = true
-			}
-		}
-		else if resultSearchController.searchBar.text! != "" {
-			if resultArray.count == 0{
-				self.octoInfoLabel.text = "Sorry, nothing here. \n" + "Try again"
-				self.octoImage.image = #imageLiteral(resourceName: "OctocatSad_")
-				self.octoView.isHidden = false
-			}
-			else if resultArray.count != 0 {
-				self.octoView.isHidden = true
-			}
-		}
-		else if resultSearchController.isActive == false {
-			self.octoInfoLabel.text = "Search to display"
-			self.octoImage.image = #imageLiteral(resourceName: "Octocat")
-			self.octoView.isHidden = false
-		}
-
-		//octoview is hidden when there are results to display
-		octoView.isHidden = resultArray.count > 0
-		
-		
+		guard let userArrayUnwrapped = userArray
+			else {return}
+		guard let repoArrayUnwrapped = repoArray
+			else {return}
+		resultArray = userArrayUnwrapped + repoArrayUnwrapped
+		searchStatus = .results
 		resultArray.sort(by: resultSorter)
-		//print("result array has \(resultArray.count) elements")
-		self.tableView.reloadData()
-		//for result in resultArray {
-		//print("id result \((result as? UserData)?.id ?? -1 ) \((result as? RepositoryData)?.id ?? -1 )" )
-		//}
+		tableView.reloadData()
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
