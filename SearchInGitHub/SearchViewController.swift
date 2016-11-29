@@ -128,6 +128,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			}
 			progressCircle.stopAnimating()
 		case let .error(errorMessage):
+			resultArray.removeAll()
+			tableView.reloadData()
 			octoImage.image = #imageLiteral(resourceName: "OctocatSad_")
 			octoInfoLabel.text = "Error! \n" + errorMessage
 			octoView.isHidden = false
