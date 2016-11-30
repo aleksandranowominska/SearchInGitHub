@@ -40,8 +40,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
 		
 		//hiding keyboard when not used
-		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-		view.addGestureRecognizer(tap)
 		self.tableView.keyboardDismissMode = .onDrag
 		
 		self.progressCircle.hidesWhenStopped = true
@@ -114,10 +112,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// MARK: Other functions
 	
-	func dismissKeyboard() {
-		self.resultSearchController.searchBar.endEditing(true)
-	}
-	
 	func updateViewsFor(status: SearchStatus){
 		switch status {
 		case .beforeSearch:
@@ -163,17 +157,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		repoArray = nil
 		
 		//search users
-		DataManager.instance.getUsers(query: searchText, userNamesDownloaded: {users in
+		DataManager.instance.getUsers(query: searchText, usersDownloaded: {users in
 			self.userArray = users
 			self.refreshTableView()
-		}, userError: {error in
+		}, error: {error in
 			self.searchStatus = .error(error)
 		})
 		//search repos
-		DataManager.instance.getRepos(query: searchText, userReposDownloaded: {repos in
+		DataManager.instance.getRepos(query: searchText, reposDownloaded: {repos in
 			self.repoArray = repos
 			self.refreshTableView()
-		}, repoError: {error in
+		}, error: {error in
 			self.searchStatus = .error(error)
 		})
 		

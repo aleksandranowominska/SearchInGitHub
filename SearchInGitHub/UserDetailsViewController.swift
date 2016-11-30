@@ -38,12 +38,12 @@ class UserDetailsViewController: UIViewController {
 		DataManager.instance.getSingleUser(userLogin: userLogin!, userDownloaded: {user in
 			self.singleUser = user
 			self.reloadLabels()
-		}, userError: {error in
+		}, error: {error in
 			print("error with getting single user")
 		})
 		DataManager.instance.getStarsQuantityForUser(userLogin: userLogin!, quantityDownloaded: {quantity in
 			self.numberOfStarsLabel.text = "\(quantity)" //github api doesn't return number of stars, it returns json with 30 starred results. Here I should add paging, but it can be a lot of pages. That will send too much requests to api, I'm afraid that with the limited api version (even with added token) it won't work good :(
-		}, userError: {error in
+		}, error: {error in
 			print("error with getting quantity of stars")
 		})
     }

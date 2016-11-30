@@ -35,7 +35,7 @@ class DataManager{
 	}
 
 	//get quantity stars for single user from Api
-	func getStarsQuantityForUser(userLogin: String, quantityDownloaded: @escaping (_ quantity: Int) -> Void, userError: @escaping (_ error: String) -> Void){
+	func getStarsQuantityForUser(userLogin: String, quantityDownloaded: @escaping (_ quantity: Int) -> Void, error: @escaping (_ error: String) -> Void){
 		
 		let starsURL = apiURL + searchSingleUser + userLogin + starsForUser
 		
@@ -45,21 +45,21 @@ class DataManager{
 			if let resultValue = response.result.value{
 				let json = JSON(resultValue)
 				if let errorMessage = json["message"].string{
-					userError(errorMessage)
+					error(errorMessage)
 				}
 				else{
 					quantityDownloaded(json.arrayValue.count)
 				}
 			}
 			else {
-				userError(response.result.error.debugDescription)
+				error(response.result.error.debugDescription)
 			}
 
 		})
 	}
 	
 	//get single user from Api
-	func getSingleUser(userLogin: String, userDownloaded: @escaping (_ userInfo: SingleUserData) -> Void, userError: @escaping (_ error: String) -> Void){
+	func getSingleUser(userLogin: String, userDownloaded: @escaping (_ userInfo: SingleUserData) -> Void, error: @escaping (_ error: String) -> Void){
 		
 		let singleUserURL = apiURL + searchSingleUser + userLogin
 		
@@ -69,21 +69,21 @@ class DataManager{
 			if let resultValue = response.result.value{
 				let json = JSON(resultValue)
 				if let errorMessage = json["message"].string{
-					userError(errorMessage)
+					error(errorMessage)
 				}
 				else{
 					userDownloaded(SingleUserData(json))
 				}
 			}
 			else {
-				userError(response.result.error.debugDescription)
+				error(response.result.error.debugDescription)
 			}
 
 		})
 	}
 	
 	//get users from Api
-	func getUsers(query: String, userNamesDownloaded: @escaping (_ userInfo: [UserData]) -> Void, userError: @escaping (_ error: String) -> Void){
+	func getUsers(query: String, usersDownloaded: @escaping (_ userInfo: [UserData]) -> Void, error: @escaping (_ error: String) -> Void){
 		let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) //replace space to %20 in URL
 		let userURL = apiURL + searchUsersApi + queryEncoded!
 		
@@ -97,7 +97,7 @@ class DataManager{
 			if let resultValue = response.result.value{
 				let json = JSON(resultValue)
 				if let errorMessage = json["message"].string{
-					userError(errorMessage)
+					error(errorMessage)
 				}
 				else{
 					let items = json["items"].arrayValue
@@ -105,7 +105,7 @@ class DataManager{
 					for item in items{
 						foundUsers.append(UserData(item))
 					}
-					userNamesDownloaded(foundUsers)
+					usersDownloaded(foundUsers)
 				}
 				
 			}
@@ -113,7 +113,7 @@ class DataManager{
 				if let cancelError = response.result.error as? NSError {
 					if cancelError.code == -999 {return} // ignore canceled requests
 				}
-				userError(response.result.error.debugDescription)
+				error(response.result.error.debugDescription)
 			}
 			
 		})
@@ -121,7 +121,7 @@ class DataManager{
 	}
 	
 	//get repos from Api
-	func getRepos(query: String, userReposDownloaded: @escaping (_ repoInfo: [RepositoryData]) -> Void, repoError: @escaping (_ error: String) -> Void){
+	func getRepos(query: String, reposDownloaded: @escaping (_ repoInfo: [RepositoryData]) -> Void, error: @escaping (_ error: String) -> Void){
 		let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) //replace space to %20 in URL
 		let repoURL = apiURL + searchReposApi + queryEncoded!
 		
@@ -140,13 +140,13 @@ class DataManager{
 					foundRepos.append(RepositoryData(item))
 					
 				}
-				userReposDownloaded(foundRepos)
+				reposDownloaded(foundRepos)
 			}
 			else {
 				if let cancelError = response.result.error as? NSError {
 					if cancelError.code == -999 {return} // ignore canceled requests
 				}
-				repoError(response.result.error.debugDescription)
+				error(response.result.error.debugDescription)
 			}
 			
 		})
