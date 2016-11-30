@@ -38,6 +38,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		//hiding keyboard when not used
+		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+		view.addGestureRecognizer(tap)
+		self.tableView.keyboardDismissMode = .onDrag
+		
 		self.progressCircle.hidesWhenStopped = true
 		
 		searchStatus = .beforeSearch
@@ -102,7 +108,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		fatalError("wrong object type")
 	}
 	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+	
 	// MARK: Other functions
+	
+	func dismissKeyboard() {
+		self.resultSearchController.searchBar.endEditing(true)
+	}
 	
 	func updateViewsFor(status: SearchStatus){
 		switch status {
