@@ -134,4 +134,19 @@ class UserDetailsViewController: UIViewController, UITableViewDataSource, UITabl
 			cell.updatedLabel.text = dateFormatter.string(from: result.repoUpdate)
 			return cell
 	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+		if segue.identifier == "goToRepoDetailsFromUser"{
+			let destination = segue.destination as! RepoDetailsViewController
+			let selectedRepo = arrayWithUserRepos[tableView.indexPathForSelectedRow!.row]
+			destination.userLogin = selectedRepo.userName
+			destination.repoName = selectedRepo.repoName
+		}
+	}
+
 }

@@ -599,6 +599,7 @@
                                             <outlet property="starsLabel" destination="kiW-Mk-q86" id="pcu-9S-lyQ"/>
                                             <outlet property="titleLabel" destination="aHG-SF-HKb" id="wor-uL-Ws2"/>
                                             <outlet property="updatedLabel" destination="sWI-ew-rZP" id="Yes-G4-jJs"/>
+                                            <segue destination="UF0-Cj-lXU" kind="show" identifier="goToRepoDetailsFromUser" id="uVT-Yt-ldi"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -815,7 +816,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z1F-GW-1I6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="850" y="-224"/>
+            <point key="canvasLocation" x="1633" y="-171"/>
         </scene>
     </scenes>
     <resources>
@@ -825,4 +826,7 @@
         <image name="location" width="12" height="12"/>
         <image name="star" width="12" height="12"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uVT-Yt-ldi"/>
+    </inferredMetricsTieBreakers>
 </document>
