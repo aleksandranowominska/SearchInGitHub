@@ -214,9 +214,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		if segue.identifier == "goToUserDetails"{
 			let destination = segue.destination as! UserDetailsViewController
 			let selectedUser = resultArray[tableView.indexPathForSelectedRow!.row] as! UserData
-			destination.userLogin =  selectedUser.userName
+			destination.userLogin = selectedUser.userName
 		}
 		else if segue.identifier == "goToRepoDetails"{
+			let destination = segue.destination as! RepoDetailsViewController
+			let selectedRepo = resultArray[tableView.indexPathForSelectedRow!.row] as! RepositoryData
+			destination.userLogin = selectedRepo.userName
+			destination.repoName = selectedRepo.repoName
 		}
 	}
 	

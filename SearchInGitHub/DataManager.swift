@@ -20,6 +20,7 @@ class DataManager{
 	let searchUsersApi = "search/users?q="
 	let searchReposApi = "search/repositories?q="
 	let searchSingleUser = "users/"
+	let searchSingleRepo = "repos/"
 	let starsForUser = "/starred"
 	
 	weak var previousUserQueryRequest: DataRequest?
@@ -79,6 +80,27 @@ class DataManager{
 				error(response.result.error.debugDescription)
 			}
 
+		})
+	}
+	
+	//get single repo from Api
+	func getSingleRepo(userLogin: String, repoName: String, repoDownloaded: @escaping (_ repoInfo: SingleRepoData) -> Void, error: @escaping (_ error: String) -> Void){
+		let singleRepoURL = apiURL + searchSingleRepo + userLogin + "/" + repoName
+		let request = Alamofire.request(singleRepoURL, headers: headers)
+		request.responseJSON(completionHandler: {response in //request for single repo data
+			debugPrint(response)
+			if let resultValue = response.result.value{
+				let json = JSON(resultValue)
+				if let errorMessage = json["message"].string{
+					error(errorMessage)
+				}
+				else {
+					repoDownloaded(SingleRepoData(json))
+				}
+			}
+			else {
+				error(response.result.error.debugDescription)
+			}
 		})
 	}
 	

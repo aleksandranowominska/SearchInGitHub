@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D1808515285F52DDD22051A /* Pods_SearchInGitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80B7A50B0024303A73B6CDC /* Pods_SearchInGitHub.framework */; };
 		6B37FAAD1DEA50A000E8304D /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B37FAAC1DEA50A000E8304D /* UIColorExtension.swift */; };
+		6B6076401E05677200465465 /* singleRepoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B60763F1E05677200465465 /* singleRepoData.swift */; };
 		6BA526C41DE9B1B00004754A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA526C31DE9B1B00004754A /* AppDelegate.swift */; };
 		6BA526C91DE9B1B00004754A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BA526C71DE9B1B00004754A /* Main.storyboard */; };
 		6BA526CE1DE9B1B00004754A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BA526CC1DE9B1B00004754A /* LaunchScreen.storyboard */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		6B37FAAC1DEA50A000E8304D /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		6B60763F1E05677200465465 /* singleRepoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = singleRepoData.swift; sourceTree = "<group>"; };
 		6BA526C01DE9B1B00004754A /* SearchInGitHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchInGitHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA526C31DE9B1B00004754A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BA526C81DE9B1B00004754A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				6BA526D71DE9D5730004754A /* SearchViewController.swift */,
 				6BA526D91DE9DA480004754A /* DataManager.swift */,
 				6BAB146F1DEB7385009140BC /* SingleUserData.swift */,
+				6B60763F1E05677200465465 /* singleRepoData.swift */,
 				6BA526DB1DE9E21E0004754A /* UserData.swift */,
 				6BA526DD1DE9F0F00004754A /* RepositoryData.swift */,
 				6BA526E11DEA0E340004754A /* RepoTableViewCell.swift */,
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BA526D81DE9D5730004754A /* SearchViewController.swift in Sources */,
+				6B6076401E05677200465465 /* singleRepoData.swift in Sources */,
 				6BA526DE1DE9F0F00004754A /* RepositoryData.swift in Sources */,
 				6BA526E41DEA0F7E0004754A /* UserTableViewCell.swift in Sources */,
 				6B37FAAD1DEA50A000E8304D /* UIColorExtension.swift in Sources */,

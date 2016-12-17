@@ -13,6 +13,7 @@ class RepositoryData{
 	
 	let id: Int
 	let repoTitle: String
+	let repoName: String
 	let repoDescription: String
 	var repoLanguage: String
 	let repoStars: Int
@@ -25,6 +26,7 @@ class RepositoryData{
 	init(_ json: JSON){
 		id = json["id"].intValue
 		repoTitle = json["full_name"].stringValue
+		repoName = json["name"].stringValue
 		repoDescription = json["description"].stringValue
 		repoLanguage = json["language"].stringValue
 		if repoLanguage == "" {
