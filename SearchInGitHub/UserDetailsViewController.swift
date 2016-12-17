@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDetailsViewController: UIViewController {
+class UserDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
 	@IBOutlet weak var userAvatar: UIImageView!
 	@IBOutlet weak var userDetailsContainer: UIView!
@@ -28,13 +28,20 @@ class UserDetailsViewController: UIViewController {
 	@IBOutlet weak var followingLabel: UILabel!
 	@IBOutlet weak var followersLabel: UILabel!
 	
+	@IBOutlet weak var tableView: UITableView!
 	
 	var singleUser: SingleUserData?
 	var userLogin: String?
+	var arrayWithUserRepos: [RepoForSingleUserData] = []
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		setupView()
+		//rows settings
+		self.tableView.rowHeight = UITableViewAutomaticDimension
+		self.tableView.estimatedRowHeight = 44.0
+		
+		//downloading data from Api
 		DataManager.instance.getSingleUser(userLogin: userLogin!, userDownloaded: {user in
 			self.singleUser = user
 			self.reloadLabels()
@@ -45,6 +52,13 @@ class UserDetailsViewController: UIViewController {
 			self.numberOfStarsLabel.text = "\(quantity)" //github api doesn't return number of stars, it returns json with 30 starred results. Here I should add paging, but it can be a lot of pages. That will send too much requests to api, I'm afraid that with the limited api version (even with added token) it won't work good :(
 		}, error: {error in
 			print("error with getting quantity of stars")
+		})
+		
+		DataManager.instance.getReposForUser(userLogin: userLogin!, repoDownloaded: {repo in
+			self.arrayWithUserRepos = repo
+			self.tableView.reloadData()
+		}, error: {error in
+			print("error with getting repos for single user")
 		})
     }
 	
@@ -93,5 +107,31 @@ class UserDetailsViewController: UIViewController {
 		}
 	}
 	
-
+	// MARK: TableVieW functions
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return arrayWithUserRepos.count
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let result = arrayWithUserRepos[indexPath.row]
+		
+			let cell = tableView.dequeueReusableCell(withIdentifier: "repoforSingleUserCell") as! RepoForSingleUserTableViewCell
+			cell.titleLabel.text = result.repoTitle
+			cell.descriptionLabel.text = result.repoDescription
+			cell.languageLabel.text = result.repoLanguage
+			cell.starsLabel.text = "\(result.repoStars)"
+			cell.forksLabel.text = "\(result.repoForks)"
+			cell.starIcon.tintColor = UIColor.starYellow
+			cell.languageIcon.tintColor = UIColor.languageTurquoise
+			cell.forkIcon.tintColor = UIColor.forkMidnightBlue
+			
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+			cell.updatedLabel.text = dateFormatter.string(from: result.repoUpdate)
+			return cell
+	}
 }
